@@ -10,7 +10,21 @@ class Fixed_wall(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.centerx = spawn_point[0] + (variable.WIDTH_SQUARE/2)
         self.rect.centery = spawn_point[1] + (variable.HEIGHT_SQUARE/2)
-
+    
+    def collision(self, player):
+        if self.rect.colliderect(player.rect):
+            if player.speedx > 0:
+                # moving right
+                player.rect.right = self.rect.left
+            elif player.speedx < 0:
+                #moving left
+                player.rect.left = self.rect.right
+            elif player.speedy < 0:
+                # moving up
+                player.rect.top = self.rect.bottom
+            elif player.speedy > 0:
+                #moving down
+                player.rect.bottom = self.rect.top
 
 class Character(pygame.sprite.Sprite):
     def __init__(self,assets):
@@ -35,7 +49,6 @@ class Character(pygame.sprite.Sprite):
             self.rect.top = variable.HEIGHT_SQUARE
         if self.rect.bottom > variable.RESOLUTION[1] - variable.HEIGHT_SQUARE:
             self.rect.bottom = variable.RESOLUTION[1] -variable.HEIGHT_SQUARE
-
 
     
 

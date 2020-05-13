@@ -18,10 +18,13 @@ player = Character(assets)
 
 all_sprites = pygame.sprite.Group()
 all_sprites.add(player)
+fixed_wall_sprites = pygame.sprite.Group()
 
 pos = funcoes.block_location(variable.MAP,variable.DIVISIONS,variable.RESOLUTION)
 for each in pos: 
-    all_sprites.add(Fixed_wall(assets, each))
+    wall = Fixed_wall(assets, each)
+    all_sprites.add(wall)
+    fixed_wall_sprites.add(wall)
 
 game = True
 
@@ -58,10 +61,13 @@ while game:
                 player.speedy -= variable.WIDTH_SQUARE/2
     
     all_sprites.update()
+
+    for wall in fixed_wall_sprites:
+        wall.collision(player)
     
     window.fill((155, 220, 72)) 
     all_sprites.draw(window)
-
+    
     pygame.display.update()
 
 pygame.quit()
