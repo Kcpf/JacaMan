@@ -12,13 +12,16 @@ pygame.init()
 window = pygame.display.set_mode((variable.RESOLUTION))
 
 pygame.display.set_caption('Super Jaca Man')
-fixed_square = pygame.Surface(variable.SQUARE_DIMENSIONS)
-fixed_square.fill(variable.SQUARE_COLOR)
 assets = assets.load_assets()
+
 player = Character(assets)
 
 all_sprites = pygame.sprite.Group()
 all_sprites.add(player)
+
+pos = funcoes.block_location(variable.MAP,variable.DIVISIONS,variable.RESOLUTION)
+for each in pos: 
+    all_sprites.add(Fixed_wall(assets, each))
 
 game = True
 
@@ -44,7 +47,6 @@ while game:
                 player.speedy -= variable.WIDTH_SQUARE/2
             if event.key == pygame.K_DOWN:
                 player.speedy += variable.WIDTH_SQUARE/2
-        
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_LEFT:
                 player.speedx += variable.WIDTH_SQUARE/2
@@ -57,13 +59,9 @@ while game:
     
     all_sprites.update()
     
-
-    pos = funcoes.block_location(variable.MAP,variable.DIVISIONS,variable.RESOLUTION)
     window.fill((155, 220, 72)) 
-    for each in pos: 
-        window.blit(fixed_square,each)
-    
     all_sprites.draw(window)
+
     pygame.display.update()
 
 pygame.quit()

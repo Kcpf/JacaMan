@@ -2,6 +2,16 @@ import assets
 import variable
 import pygame
 
+class Fixed_wall(pygame.sprite.Sprite):
+    def __init__(self,assets,spawn_point):
+        pygame.sprite.Sprite.__init__(self)
+
+        self.image = assets['square_img']
+        self.rect = self.image.get_rect()
+        self.rect.centerx = spawn_point[0] + (variable.WIDTH_SQUARE/2)
+        self.rect.centery = spawn_point[1] + (variable.HEIGHT_SQUARE/2)
+
+
 class Character(pygame.sprite.Sprite):
     def __init__(self,assets):
         pygame.sprite.Sprite.__init__(self)
@@ -25,6 +35,7 @@ class Character(pygame.sprite.Sprite):
             self.rect.top = variable.HEIGHT_SQUARE
         if self.rect.bottom > variable.RESOLUTION[1] - variable.HEIGHT_SQUARE:
             self.rect.bottom = variable.RESOLUTION[1] -variable.HEIGHT_SQUARE
+
 
     
 

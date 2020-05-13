@@ -19,4 +19,3 @@ def create_map(divisions):
             map_matrix[line][1:] = [0,1]*(divisions[0]//2)
             
     return map_matrix
-            
