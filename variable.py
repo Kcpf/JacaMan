@@ -1,25 +1,19 @@
 import numpy as np
+import funcoes
 
-RESOLUTION = (650, 650)
-DIVISIONS = (13, 13)
-LENGHT_SQUARE = RESOLUTION[0] // DIVISIONS[0]
+
+RESOLUTION = (600, 600)
+#resolução só pode ser quadrada 
+#divisão tem que ser numero inteiro 
+DIVISIONS = (15, 15) # Even numbers
+WIDTH_SQUARE = RESOLUTION[0] // DIVISIONS[0]
 HEIGHT_SQUARE = RESOLUTION[1] // DIVISIONS[1]
-SQUARE_DIMENSIONS = (LENGHT_SQUARE, HEIGHT_SQUARE)
+SQUARE_DIMENSIONS = (WIDTH_SQUARE, HEIGHT_SQUARE)
 SQUARE_COLOR = (140,140,140)
 
-# MAP = np.zeros((DIVISIONS[0], DIVISIONS[1]))
+MAP = funcoes.create_map(DIVISIONS)
 
-MAP = np.array([[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]])
+PLAYER_WIDTH = WIDTH_SQUARE
+PLAYER_HEIGHT = HEIGHT_SQUARE
+
 
