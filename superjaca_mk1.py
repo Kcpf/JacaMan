@@ -1,4 +1,4 @@
-import pygame 
+import pygame
 import random
 import variable
 import numpy
@@ -20,8 +20,8 @@ all_sprites = pygame.sprite.Group()
 all_sprites.add(player)
 fixed_wall_sprites = pygame.sprite.Group()
 
-pos = funcoes.block_location(variable.MAP,variable.DIVISIONS,variable.RESOLUTION)
-for each in pos: 
+pos = funcoes.block_location(variable.MAP, variable.DIVISIONS, variable.RESOLUTION)
+for each in pos:
     wall = Fixed_wall(assets, each)
     all_sprites.add(wall)
     fixed_wall_sprites.add(wall)
@@ -30,8 +30,7 @@ game = True
 
 clock = pygame.time.Clock()
 FPS = 10
-
-#looooop principal 
+# looooop principal
 while game:
     clock.tick(FPS)
 
@@ -39,8 +38,8 @@ while game:
         # ----- Verifica consequências
         if event.type == pygame.QUIT:
             game = False
-    
-        #player movement
+
+        # player movement
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_LEFT:
                 player.speedx -= variable.WIDTH_SQUARE/2
@@ -59,15 +58,17 @@ while game:
                 player.speedy += variable.WIDTH_SQUARE/2
             if event.key == pygame.K_DOWN:
                 player.speedy -= variable.WIDTH_SQUARE/2
-    
+
     all_sprites.update()
 
     for wall in fixed_wall_sprites:
-        wall.collision(player)
-    
-    window.fill((155, 220, 72)) 
+        if funcoes.cant_pass(player, wall):
+            player.rect.y -= player.speedy 
+            player.rect.x -= player.speedx
+
+    window.fill((155, 220, 72))
     all_sprites.draw(window)
-    
+
     pygame.display.update()
 
 pygame.quit()
