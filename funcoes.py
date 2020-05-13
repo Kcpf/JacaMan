@@ -1,5 +1,6 @@
 import numpy as np
 
+
 #posição dos blocos no map
 def block_location(matrix, divisions, resolution):
     positions = []
@@ -8,7 +9,7 @@ def block_location(matrix, divisions, resolution):
         positions.append((columns[i]*(resolution[0]/divisions[0]), lines[i]*(resolution[0]/divisions[0])))
 
     return positions
-                
+
 def create_map(divisions):
     map_matrix = np.ones((divisions[0], divisions[1]))
     for line in range(1, len(map_matrix)-1):
