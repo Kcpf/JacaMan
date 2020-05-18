@@ -44,8 +44,12 @@ def load_spritesheet(img_sprite, rows, columns):
             dest_rect = pygame.Rect(x, y, width, height)
 
             # Cria uma imagem vazia do tamanho do sprite
-            image = pygame.Surface((width, height))     
+            image = pygame.Surface((width, height), pygame.SRCALPHA)
+            image = image.convert_alpha()
+
+            
             # Copia o sprite atual (do spritesheet) na imagem
             image.blit(img_sprite, (0, 0), dest_rect)
+
             sprites.append(image)
     return sprites

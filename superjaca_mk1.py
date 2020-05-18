@@ -22,6 +22,7 @@ player = Character(player_sheet)
 
 all_sprites = pygame.sprite.Group()
 all_sprites.add(player)
+all_jacas = pygame.sprite.Group()
 
 fixed_wall_sprites = pygame.sprite.Group()
 
@@ -45,7 +46,12 @@ while game:
             game = False
 
         # player movement
+        
         if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE:   
+                #EXPLODE TUDO E CAGA GERAL DE JACA 
+                player.drop_bomb(assets, all_sprites, all_jacas)
+            
             if event.key == pygame.K_LEFT:
                 player.state = variable.LEFT
                 player.speedx -= variable.WIDTH_SQUARE/2
