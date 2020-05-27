@@ -23,8 +23,8 @@ player = Character(player_sheet)
 all_sprites = pygame.sprite.Group()
 all_sprites.add(player)
 all_jacas = pygame.sprite.Group()
-
 fixed_wall_sprites = pygame.sprite.Group()
+all_explosions = pygame.sprite.Group()
 
 pos = funcoes.block_location(variable.MAP, variable.DIVISIONS, variable.RESOLUTION)
 for each in pos:
@@ -35,7 +35,7 @@ for each in pos:
 game = True
 
 clock = pygame.time.Clock()
-FPS = 10
+FPS = 7
 # looooop principal
 while game:
     clock.tick(FPS)
@@ -48,43 +48,41 @@ while game:
         # player movement
         
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_SPACE:   
-                #EXPLODE TUDO E CAGA GERAL DE JACA 
+            if event.key == pygame.K_SPACE:
                 player.drop_bomb(assets, all_sprites, all_jacas)
             
             if event.key == pygame.K_LEFT:
                 player.state = variable.LEFT
-                player.speedx -= variable.WIDTH_SQUARE/2
+                player.speedx -= variable.WIDTH_SQUARE
                 
             if event.key == pygame.K_RIGHT:
                 player.state = variable.RIGHT
-                player.speedx += variable.WIDTH_SQUARE/2
+                player.speedx += variable.WIDTH_SQUARE
 
             if event.key == pygame.K_UP:
                 player.state = variable.UP
-                player.speedy -= variable.WIDTH_SQUARE/2
+                player.speedy -= variable.WIDTH_SQUARE
             
             if event.key == pygame.K_DOWN:
                 player.state = variable.DOWN
-                player.speedy += variable.WIDTH_SQUARE/2
+                player.speedy += variable.WIDTH_SQUARE
                 
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_LEFT:
                 player.state = variable.STILL
-                player.speedx += variable.WIDTH_SQUARE/2
+                player.speedx += variable.WIDTH_SQUARE
 
             if event.key == pygame.K_RIGHT:
                 player.state = variable.STILL
-                player.speedx -= variable.WIDTH_SQUARE/2
+                player.speedx -= variable.WIDTH_SQUARE
 
             if event.key == pygame.K_UP:
                 player.state = variable.STILL
-                player.speedy += variable.WIDTH_SQUARE/2
+                player.speedy += variable.WIDTH_SQUARE
 
             if event.key == pygame.K_DOWN:
                 player.state = variable.STILL
-                player.speedy -= variable.WIDTH_SQUARE/2
-
+                player.speedy -= variable.WIDTH_SQUARE
     all_sprites.update()
 
     for wall in fixed_wall_sprites:
@@ -92,7 +90,13 @@ while game:
             player.rect.y -= player.speedy 
             player.rect.x -= player.speedx
 
+    all_jacas.update()
+
+    if len(pygame.sprite.spritecollide(player, all_jacas, True, pygame.sprite.collide_mask)) > 0:
+        player.kill()
+    
     window.fill((155, 220, 72))
+    all_jacas.draw(window)
     all_sprites.draw(window)
 
     pygame.display.update()

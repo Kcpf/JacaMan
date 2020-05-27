@@ -89,9 +89,10 @@ class Character(pygame.sprite.Sprite):
             self.last_shot = now
             
             new_jaca = Jaca(assets, self.rect.centerx, self.rect.centery)
-            all_sprites.add(new_jaca)
+            # all_sprites.add(new_jaca)
             all_jacas.add(new_jaca)
-       
+    
+    
 
 
 class Jaca(pygame.sprite.Sprite):
@@ -104,13 +105,16 @@ class Jaca(pygame.sprite.Sprite):
 
         self.mask = pygame.mask.from_surface(self.image)
         self.rect = self.image.get_rect()
+        self.assets = assets
 
-        self.rect.centerx = px          
+        self.x = px
+        self.y = py
+        self.rect.centerx = px
         self.rect.centery = py
         self.last_update = pygame.time.get_ticks()
-        self.frame_ticks = 500
-        self.frame_ticks_exp = 1000
-
+        self.frame_ticks = 1000
+        self.frame_ticks_exp = 3000
+    
     def update(self):
         now = pygame.time.get_ticks()
 
@@ -121,46 +125,50 @@ class Jaca(pygame.sprite.Sprite):
             self.image = self.jaca_types['aberta']
             self.mask = pygame.mask.from_surface(self.image)
 
+        if elapsed_ticks > self.frame_ticks*2:
+            # new_exp = Explosion(self.rect.center, self.assets)
+            # all_s.add(new_exp)
+            # self.kill()
+            #criar class explosion e adicionar a partir desse ponto na classe
+            self.image = self.assets['explojaca']
+            self.rect = self.image.get_rect()
+            self.rect.centerx = self.x
+            self.rect.centery = self.y
+
+
         if elapsed_ticks > self.frame_ticks_exp:
             self.kill()
 
 
+# class Explosion(pygame.sprite.Sprite):
+#     def __init__(self, center, assets):
+#         pygame.sprite.Sprite.__init__(self)
 
-
-class Explosion(pygame.sprite.Sprite):
-    def __init__(self, center, assets):
-        pygame.sprite.Sprite.__init__(self, px, py)
-
-        self.explosion= assets['explojaca']
+#         self.image = assets['explojaca']
  
-        self.rect = self.image.get_rect()
-        self.rect.center = center  
+#         self.rect = self.image.get_rect()
+#         self.rect.center = center
 
-        self.last_update = pygame.time.get_ticks()
+#         self.last_update = pygame.time.get_ticks()
 
-        self.frame_ticks = 50
+#         self.frame_ticks = 500
+#         self.frame = 0
 
-    def update(self):
-        now = pygame.time.get_ticks()
-        elapsed_ticks = now - self.last_update
+#     def update(self):
+#         now = pygame.time.get_ticks()
+#         elapsed_ticks = now - self.last_update
 
-        if elapsed_ticks > self.frame_ticks:
+#         if elapsed_ticks > self.frame_ticks:
 
-            self.last_update = now
+#             self.last_update = now
 
+#             self.frame += 1
 
-            self.frame += 1
+#             if self.frame == len(self.explosion_anim):
+#                 self.kill()
 
-
-            if self.frame == len(self.explosion_anim):
-
-                self.kill()
-            else:
-
-                center = self.rect.center
-                self.image = self.explosion_anim[self.frame]
-                self.rect = self.image.get_rect()
-                self.rect.center = center
-        
-
-        
+#             else:
+#                 center = self.rect.center
+#                 self.image = self.explosion_anim[self.frame]
+#                 self.rect = self.image.get_rect()
+#                 self.rect.center = center
