@@ -2,10 +2,10 @@ import numpy as np
 import funcoes
 
 
-RESOLUTION = (600, 600)
+RESOLUTION = (750, 750)
 #resolução só pode ser quadrada 
 #divisão tem que ser numero inteiro 
-DIVISIONS = (15, 15) # Even numbers
+DIVISIONS = (45, 45) # Even numbers
 WIDTH_SQUARE = (RESOLUTION[0] // DIVISIONS[0])
 HEIGHT_SQUARE = (RESOLUTION[1] // DIVISIONS[1])
 SQUARE_DIMENSIONS = (WIDTH_SQUARE, HEIGHT_SQUARE)
