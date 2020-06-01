@@ -6,6 +6,7 @@ import funcoes
 import assets
 from classes import *
 from os import path
+
 pygame.init()
 
 #Define configurações de tela
@@ -14,12 +15,15 @@ pygame.display.set_caption('Super Jaca Man')
 
 #Carrega todos os assets
 assets = assets.load_assets()
-img_dir = path.join(path.dirname(__file__), 'img')
-player_sheet = pygame.image.load(path.join(img_dir, 'zelda_sprites.png')).convert_alpha()
-
+char_pos = [[variable.RESOLUTION[0]/variable.DIVISIONS[0],variable.RESOLUTION[1] - 40],
+            [variable.RESOLUTION[0]/variable.DIVISIONS[0], 80],
+            [variable.RESOLUTION[0] - 40, variable.RESOLUTION[1] - 40],
+            [variable.RESOLUTION[0] - 40, 80]]
+    
 #Inicializa classes
-p1 = Character(player_sheet)
-p2 = Character(player_sheet)
+p1 = Character(assets["player1_img"], char_pos[0][0], char_pos[0][1])
+p2 = Character(assets["player2_img"],char_pos[1][0],char_pos[1][1])
+
 
 #Grupos de pepsi
 all_sprites = pygame.sprite.Group()
@@ -32,8 +36,11 @@ all_walls = pygame.sprite.Group()
 
 all_sprites.add(p1)
 all_sprites.add(p2)
+
+
 all_players.add(p1)
 all_players.add(p2)
+
 
 #Cria as paredes fixas
 pos = funcoes.block_location(variable.MAP, variable.DIVISIONS, variable.RESOLUTION)
@@ -135,18 +142,14 @@ while game:
     
     all_sprites.update()
     all_jacas.update()
-
-    for wall in removable_wall_sprites:
-        for jaca in pygame.sprite.spritecollide(wall, all_jacas, False , pygame.sprite.collide_mask):
-            if jaca.image != jaca.jaca_types["aberta"] and jaca.image != jaca.jaca_types["fechada"]:
-                wall.kill()
-#detecta colisoes
+    
+    #detecta colisoes
     for player in all_players:
         for jaca in pygame.sprite.spritecollide(player, all_jacas, False , pygame.sprite.collide_mask):
             if jaca.image != jaca.jaca_types["aberta"] and jaca.image != jaca.jaca_types["fechada"]:
                 player.kill()
             else:
-                if funcoes.cant_pass(player, jaca):
+                if funcoes.cant_pass(player, jaca): #mover o cant_passs para dentro da classe player
                     player.rect.y -= player.speedy 
                     player.rect.x -= player.speedx
                 
@@ -156,6 +159,13 @@ while game:
             if funcoes.cant_pass(player, wall):
                 player.rect.y -= player.speedy 
                 player.rect.x -= player.speedx
+                break
+
+    for wall in removable_wall_sprites:
+        for jaca in pygame.sprite.spritecollide(wall, all_jacas, False , pygame.sprite.collide_mask):
+            if jaca.image != jaca.jaca_types["aberta"] and jaca.image != jaca.jaca_types["fechada"]:
+                wall.kill()
+
 
     window.fill((155, 220, 72))
     all_jacas.draw(window)

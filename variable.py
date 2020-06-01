@@ -1,6 +1,6 @@
 import numpy as np
 import funcoes
-
+import assets
 
 RESOLUTION = (600, 600)
 #resolução só pode ser quadrada 
@@ -13,9 +13,10 @@ EXPLO_DIMENSIONS = (WIDTH_SQUARE*3, HEIGHT_SQUARE*3)
 SQUARE_COLOR = (140,140,140)
 
 MAP = funcoes.create_map(DIVISIONS)
-MAP = funcoes.modify_map(MAP, 3)
+MAP = funcoes.modify_map(MAP, round(DIVISIONS[0]/2))
 PLAYER_WIDTH = WIDTH_SQUARE
 PLAYER_HEIGHT = HEIGHT_SQUARE
+
 
 # Define estados possíveis do jogador
 STILL = 0

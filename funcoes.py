@@ -39,10 +39,17 @@ def create_map(divisions):
 # Modifica a matriz para adicionar os tijolos
 def modify_map(matrix, number_per_line):
     for line in range(1, len(matrix)-1):
-        randomlist = random.sample(range(1, len(matrix[0])), number_per_line)
+        if line == 1 or line == len(matrix) - 2:
+            randomlist = random.sample(range(3, len(matrix[0])-3), number_per_line)
+        elif line == 2 or line == len(matrix) - 3:
+            randomlist = random.sample(range(2, len(matrix[0])-2), number_per_line)
+        else:
+            randomlist = random.sample(range(1, len(matrix[0])), number_per_line)
+        
         for each in randomlist:
             if matrix[line][each] != 1:
-                matrix[line][each] = 2
+                matrix[line][each] = 2 
+
     return matrix
 
 #impede o movimento atraves de bloco
