@@ -27,6 +27,9 @@ all_jacas = pygame.sprite.Group()
 fixed_wall_sprites = pygame.sprite.Group()
 all_explosions = pygame.sprite.Group()
 all_players = pygame.sprite.Group()
+removable_wall_sprites = pygame.sprite.Group()
+all_walls = pygame.sprite.Group()
+
 all_sprites.add(p1)
 all_sprites.add(p2)
 all_players.add(p1)
@@ -38,7 +41,15 @@ for each in pos:
     wall = Fixed_wall(assets, each)
     all_sprites.add(wall)
     fixed_wall_sprites.add(wall)
+    all_walls.add(wall)
 
+# Cria as paredes removíveis
+pos_tijolo = funcoes.tijolo_location(variable.MAP, variable.DIVISIONS, variable.RESOLUTION)
+for each in pos_tijolo:
+    wall = Removable_wall(assets, each)
+    all_sprites.add(wall)
+    removable_wall_sprites.add(wall)
+    all_walls.add(wall)
 
 game = True
 clock = pygame.time.Clock()
@@ -125,6 +136,10 @@ while game:
     all_sprites.update()
     all_jacas.update()
 
+    for wall in removable_wall_sprites:
+        for jaca in pygame.sprite.spritecollide(wall, all_jacas, False , pygame.sprite.collide_mask):
+            if jaca.image != jaca.jaca_types["aberta"] and jaca.image != jaca.jaca_types["fechada"]:
+                wall.kill()
 #detecta colisoes
     for player in all_players:
         for jaca in pygame.sprite.spritecollide(player, all_jacas, False , pygame.sprite.collide_mask):
@@ -137,7 +152,7 @@ while game:
                 
     #impede que o p entre na parede
     for player in all_players:
-        for wall in fixed_wall_sprites:
+        for wall in all_walls:
             if funcoes.cant_pass(player, wall):
                 player.rect.y -= player.speedy 
                 player.rect.x -= player.speedx

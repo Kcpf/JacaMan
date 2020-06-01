@@ -7,7 +7,7 @@ SQUARE_IMG = 'square_img'
 JACA_ABERTA_IMG = "jaca_aberta_img"
 JACA_FECHADA_IMG = "jaca_fechada_img"
 EXPLOSAO = 'explojaca'
-img_dir = path.join(path.dirname(__file__), 'img')
+TIJOLO = "tijolo"
 
 def load_assets():
     assets = {}
@@ -25,6 +25,9 @@ def load_assets():
 
     assets[EXPLOSAO] = pygame.image.load('img/explojaca.png').convert_alpha()
     assets[EXPLOSAO] = pygame.transform.scale(assets['explojaca'], variable.EXPLO_DIMENSIONS)
+
+    assets[TIJOLO] = pygame.image.load('img/tijolo.png').convert_alpha()
+    assets[TIJOLO] = pygame.transform.scale(assets['tijolo'], variable.SQUARE_DIMENSIONS)
 
     return assets
 

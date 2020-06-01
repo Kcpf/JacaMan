@@ -12,6 +12,14 @@ class Fixed_wall(pygame.sprite.Sprite):
         self.rect.centerx = spawn_point[0] + (variable.WIDTH_SQUARE/2)
         self.rect.centery = spawn_point[1] + (variable.HEIGHT_SQUARE/2)
 
+class Removable_wall(pygame.sprite.Sprite):
+    def __init__(self, assets, spawn_point):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = assets['tijolo']
+        self.rect = self.image.get_rect()
+        self.rect.centerx = spawn_point[0] + (variable.WIDTH_SQUARE/2)
+        self.rect.centery = spawn_point[1] + (variable.HEIGHT_SQUARE/2)
+
 #Classe Principal, cria todas as caracteristicas do player
 class Character(pygame.sprite.Sprite):
     def __init__(self, player_sheet):

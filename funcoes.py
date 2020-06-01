@@ -1,9 +1,10 @@
 import numpy as np
 import variable
 import pygame
+import random
 
 
-#Define os blocos matriz 
+#Define a localização dos blocos na matrix
 def block_location(matrix, divisions, resolution):
     positions = []
     lines, columns = np.where(matrix == 1)
@@ -12,6 +13,17 @@ def block_location(matrix, divisions, resolution):
             (columns[i]*(resolution[0]/divisions[0]), lines[i]*(resolution[0]/divisions[0])))
 
     return positions
+
+#Define a localização dos tijolos na matrix
+def tijolo_location(matrix, divisions, resolution):
+    positions = []
+    lines, columns = np.where(matrix == 2)
+    for i in range(len(lines)):
+        positions.append(
+            (columns[i]*(resolution[0]/divisions[0]), lines[i]*(resolution[0]/divisions[0])))
+
+    return positions
+
 
 # Cria uma matriz para ser usada como mapa
 def create_map(divisions):
@@ -23,6 +35,15 @@ def create_map(divisions):
             map_matrix[line][1:] = [0, 1]*(divisions[0]//2)
 
     return map_matrix
+
+# Modifica a matriz para adicionar os tijolos
+def modify_map(matrix, number_per_line):
+    for line in range(1, len(matrix)-1):
+        randomlist = random.sample(range(1, len(matrix[0])), number_per_line)
+        for each in randomlist:
+            if matrix[line][each] != 1:
+                matrix[line][each] = 2
+    return matrix
 
 #impede o movimento atraves de bloco
 def cant_pass(player, wall):
