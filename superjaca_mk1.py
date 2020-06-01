@@ -15,7 +15,7 @@ pygame.display.set_caption('Super Jaca Man')
 #Carrega todos os assets
 assets = assets.load_assets()
 img_dir = path.join(path.dirname(__file__), 'img')
-player_sheet = pygame.image.load(path.join(img_dir, 'bomberman_sprites.png')).convert_alpha()
+player_sheet = pygame.image.load(path.join(img_dir, 'zelda_sprites.png')).convert_alpha()
 
 #Inicializa classes
 p1 = Character(player_sheet)
