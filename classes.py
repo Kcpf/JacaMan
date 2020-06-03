@@ -35,7 +35,7 @@ class Character(pygame.sprite.Sprite):
             variable.LEFT: spritesheet[8:12],
             variable.UP: spritesheet[12:15],
         }
-        self.state = variable.UP
+        self.state = variable.STILL
         self.animation = self.animations[self.state]
         self.frame = 0
         self.image = self.animation[self.frame]
@@ -107,7 +107,12 @@ class Jaca(pygame.sprite.Sprite):
     def __init__(self, assets, px, py):
         pygame.sprite.Sprite.__init__(self)
 
-        self.jaca_types = {"aberta": assets["jaca_aberta_img"], "fechada":assets["jaca_fechada_img"]}
+        self.jaca_types = {
+            "fechada":assets["jaca_fechada_img"], 
+            "aberta1":assets["jaca_aberta1_img"], 
+            "aberta2":assets["jaca_aberta2_img"],
+            "aberta3":assets["jaca_aberta3_img"]}
+
         self.image = self.jaca_types['fechada']
         self.mask = pygame.mask.from_surface(self.image)
         self.rect = self.image.get_rect()
@@ -119,8 +124,8 @@ class Jaca(pygame.sprite.Sprite):
         self.rect.centery = py
         
         self.last_update = pygame.time.get_ticks()
-        self.frame_ticks = 1000
-        self.frame_ticks_exp = 3000
+        self.frame_ticks = 300
+        self.frame_ticks_exp = 2500
 
     def update(self):
         now = pygame.time.get_ticks()
@@ -128,17 +133,32 @@ class Jaca(pygame.sprite.Sprite):
 
         #transfoma no sprite da jaca aberta
         if elapsed_ticks > self.frame_ticks:
-            self.image = self.jaca_types['aberta']
+            self.image = self.jaca_types['aberta1']
+            self.mask = pygame.mask.from_surface(self.image)
+        
+        if elapsed_ticks > self.frame_ticks*2:
+            self.image = self.jaca_types['aberta2']
+            self.mask = pygame.mask.from_surface(self.image)
+
+        if elapsed_ticks > self.frame_ticks*3:
+            self.image = self.jaca_types['aberta3']
             self.mask = pygame.mask.from_surface(self.image)
 
         #transforma no sprite da bomba
-        if elapsed_ticks > self.frame_ticks*2:
-            # new_exp = Explosion(self.rect.center, self.assets)
-            # all_s.add(new_exp)
-            # self.kill()
+        if elapsed_ticks > self.frame_ticks*4:
 
-            #criar class explosion e adicionar a partir desse ponto na classe
-            self.image = self.assets['explojaca']
+            if elapsed_ticks > self.frame_ticks*4 + 250:
+                self.image = self.assets['explojaca1_img']
+            
+            if elapsed_ticks > self.frame_ticks*4 + 500:
+                self.image = self.assets['explojaca2_img']
+            
+            if elapsed_ticks > self.frame_ticks*4 + 750:
+                self.image = self.assets['explojaca3_img']
+            
+            if elapsed_ticks > self.frame_ticks*4 + 1000:
+                self.image = self.assets['explojaca4_img']
+
             self.rect = self.image.get_rect()
             self.mask = pygame.mask.from_surface(self.image)
             self.rect.centerx = self.x

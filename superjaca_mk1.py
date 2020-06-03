@@ -9,23 +9,23 @@ from os import path
 
 pygame.init()
 
-#Define configurações de tela
+# Define configurações de tela
 window = pygame.display.set_mode((variable.RESOLUTION))
 pygame.display.set_caption('Super Jaca Man')
 
-#Carrega todos os assets
+# Carrega todos os assets
 assets = assets.load_assets()
-char_pos = [[variable.RESOLUTION[0]/variable.DIVISIONS[0],variable.RESOLUTION[1] - 40],
+char_pos = [[variable.RESOLUTION[0]/variable.DIVISIONS[0], variable.RESOLUTION[1] - 40],
             [variable.RESOLUTION[0]/variable.DIVISIONS[0], 80],
             [variable.RESOLUTION[0] - 40, variable.RESOLUTION[1] - 40],
             [variable.RESOLUTION[0] - 40, 80]]
-    
-#Inicializa classes
+
+# Inicializa classes
 p1 = Character(assets["player1_img"], char_pos[0][0], char_pos[0][1])
-p2 = Character(assets["player2_img"],char_pos[1][0],char_pos[1][1])
+p2 = Character(assets["player2_img"], char_pos[1][0], char_pos[1][1])
 
 
-#Grupos de pepsi
+# Grupos de pepsi
 all_sprites = pygame.sprite.Group()
 all_jacas = pygame.sprite.Group()
 fixed_wall_sprites = pygame.sprite.Group()
@@ -42,8 +42,9 @@ all_players.add(p1)
 all_players.add(p2)
 
 
-#Cria as paredes fixas
-pos = funcoes.block_location(variable.MAP, variable.DIVISIONS, variable.RESOLUTION)
+# Cria as paredes fixas
+pos = funcoes.block_location(
+    variable.MAP, variable.DIVISIONS, variable.RESOLUTION)
 for each in pos:
     wall = Fixed_wall(assets, each)
     all_sprites.add(wall)
@@ -51,7 +52,8 @@ for each in pos:
     all_walls.add(wall)
 
 # Cria as paredes removíveis
-pos_tijolo = funcoes.tijolo_location(variable.MAP, variable.DIVISIONS, variable.RESOLUTION)
+pos_tijolo = funcoes.tijolo_location(
+    variable.MAP, variable.DIVISIONS, variable.RESOLUTION)
 for each in pos_tijolo:
     wall = Removable_wall(assets, each)
     all_sprites.add(wall)
@@ -62,7 +64,8 @@ game = True
 clock = pygame.time.Clock()
 FPS = 7
 
-#Inicializa loop principal
+# Inicializa loop principal
+pygame.mixer.music.play(loops=-1)
 while game:
     clock.tick(FPS)
 
@@ -71,9 +74,9 @@ while game:
         if event.type == pygame.QUIT:
             game = False
 
-        #Recebe e retorna ações do p
+        # Recebe e retorna ações do p
         if event.type == pygame.KEYDOWN:
-            #eventos player 1
+            # eventos player 1
             if event.key == pygame.K_l:
                 p1.drop_bomb(assets, all_sprites, all_jacas)
             if event.key == pygame.K_LEFT:
@@ -89,7 +92,7 @@ while game:
                 p1.state = variable.DOWN
                 p1.speedy += variable.WIDTH_SQUARE
 
-            #event player 2
+            # event player 2
             if event.key == pygame.K_e:
                 p2.drop_bomb(assets, all_sprites, all_jacas)
             if event.key == pygame.K_a:
@@ -104,7 +107,7 @@ while game:
             if event.key == pygame.K_s:
                 p2.state = variable.DOWN
                 p2.speedy += variable.WIDTH_SQUARE
-                
+
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_LEFT:
                 p1.state = variable.STILL
@@ -121,8 +124,8 @@ while game:
             if event.key == pygame.K_DOWN:
                 p1.state = variable.STILL
                 p1.speedy -= variable.WIDTH_SQUARE
-                
-            #event player 2    
+
+            # event player 2
             if event.key == pygame.K_a:
                 p2.state = variable.STILL
                 p2.speedx += variable.WIDTH_SQUARE
@@ -138,34 +141,33 @@ while game:
             if event.key == pygame.K_s:
                 p2.state = variable.STILL
                 p2.speedy -= variable.WIDTH_SQUARE
-    
-    
+
     all_sprites.update()
     all_jacas.update()
-    
-    #detecta colisoes
+
+    # detecta colisoes
     for player in all_players:
-        for jaca in pygame.sprite.spritecollide(player, all_jacas, False , pygame.sprite.collide_mask):
-            if jaca.image != jaca.jaca_types["aberta"] and jaca.image != jaca.jaca_types["fechada"]:
+        for jaca in pygame.sprite.spritecollide(player, all_jacas, False, pygame.sprite.collide_mask):
+            if jaca.image != jaca.jaca_types["aberta1"] and jaca.image != jaca.jaca_types["fechada"] and jaca.image != jaca.jaca_types["aberta2"] and jaca.image != jaca.jaca_types["aberta3"]:
                 player.kill()
             else:
-                if funcoes.cant_pass(player, jaca): #mover o cant_passs para dentro da classe player
-                    player.rect.y -= player.speedy 
+                # mover o cant_passs para dentro da classe player
+                if funcoes.cant_pass(player, jaca):
+                    player.rect.y -= player.speedy
                     player.rect.x -= player.speedx
-                
-    #impede que o p entre na parede
+
+    # impede que o p entre na parede
     for player in all_players:
         for wall in all_walls:
             if funcoes.cant_pass(player, wall):
-                player.rect.y -= player.speedy 
+                player.rect.y -= player.speedy
                 player.rect.x -= player.speedx
                 break
 
     for wall in removable_wall_sprites:
-        for jaca in pygame.sprite.spritecollide(wall, all_jacas, False , pygame.sprite.collide_mask):
-            if jaca.image != jaca.jaca_types["aberta"] and jaca.image != jaca.jaca_types["fechada"]:
+        for jaca in pygame.sprite.spritecollide(wall, all_jacas, False, pygame.sprite.collide_mask):
+            if jaca.image != jaca.jaca_types["aberta1"] and jaca.image != jaca.jaca_types["fechada"] and jaca.image != jaca.jaca_types["aberta2"] and jaca.image != jaca.jaca_types["aberta3"]:
                 wall.kill()
-
 
     window.fill((155, 220, 72))
     all_jacas.draw(window)
