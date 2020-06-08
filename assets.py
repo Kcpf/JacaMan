@@ -16,20 +16,25 @@ EXPLOJACA1_IMG = "explojaca1_img"
 EXPLOJACA2_IMG = "explojaca2_img"
 EXPLOJACA3_IMG = "explojaca3_img"
 EXPLOJACA4_IMG = "explojaca4_img"
-
+EXPLOSION_SOUNDS = "explosion_sound"
 EXPLOSAO = 'explojaca'
 TIJOLO = "tijolo"
+TELAINI = 'pejacks'
+TELAFIM1 = 'pe_na_jaca1'
+TELAFIM2 = 'pe_na_jaca2'
+
 
 def load_assets():
     jaca_load = pygame.image.load("img/jaca_sprite2.0.png")
     jacas = funcoes.load_spritesheet(jaca_load, 2, 2)
 
     explo_load = pygame.image.load("img/explojaca (1).png")
-    explo_load = pygame.transform.scale(explo_load, (variable.WIDTH_SQUARE*3*2 ,variable.HEIGHT_SQUARE*3*2))
+    explo_load = pygame.transform.scale(
+        explo_load, (variable.WIDTH_SQUARE*3*2, variable.HEIGHT_SQUARE*3*2))
     explojaca = funcoes.load_spritesheet(explo_load, 2, 2)
 
     assets = {}
-    assets[PLAYER1_IMG] = pygame.image.load('img/ash_sprites.png').convert_alpha()
+    assets[PLAYER1_IMG] = pygame.image.load('img/teste.png').convert_alpha()
 
     assets[PLAYER2_IMG] = pygame.image.load('img/zelda_sprites.png').convert_alpha()
 
@@ -39,9 +44,6 @@ def load_assets():
 
     assets[SQUARE_IMG] = pygame.image.load('img/bloco.png').convert_alpha()
     assets[SQUARE_IMG] = pygame.transform.scale(assets['square_img'], variable.SQUARE_DIMENSIONS)
-
-    assets[EXPLOSAO] = pygame.image.load('img/explojaca.png').convert_alpha()
-    assets[EXPLOSAO] = pygame.transform.scale(assets['explojaca'], variable.EXPLO_DIMENSIONS)
 
     assets[TIJOLO] = pygame.image.load('img/tijolo.png').convert_alpha()
     assets[TIJOLO] = pygame.transform.scale(assets['tijolo'], variable.SQUARE_DIMENSIONS)
@@ -54,12 +56,20 @@ def load_assets():
     assets[EXPLOJACA1_IMG] = explojaca[0]
     assets[EXPLOJACA2_IMG] = explojaca[1]
     assets[EXPLOJACA3_IMG] = explojaca[2]
-    assets[EXPLOJACA4_IMG] = explojaca[3]   
-    
+    assets[EXPLOJACA4_IMG] = explojaca[3]
+
+    assets[TELAINI] = pygame.image.load('img/PeNaJaca.png').convert_alpha()
+    assets[TELAINI] = pygame.transform.scale(assets['pejacks'], variable.RESOLUTION)
+
+    assets[TELAFIM1] = pygame.image.load('img/PeNaJacafinalP1.png').convert_alpha()
+    assets[TELAFIM1] = pygame.transform.scale(assets['pe_na_jaca1'], variable.RESOLUTION)
+
+    assets[TELAFIM2] = pygame.image.load('img/PeNaJacafinalP2.png').convert_alpha()
+    assets[TELAFIM2] = pygame.transform.scale(assets['pe_na_jaca2'], variable.RESOLUTION)
+
     # Carrega os sons do jogo
-    pygame.mixer.music.load('sounds/Mr. Blue 8bit.mp3')
-    pygame.mixer.music.set_volume(0.1)
+    pygame.mixer.music.load('sounds/Mr._Blue_8bit.mp3')
+    pygame.mixer.music.set_volume(1)
+    # assets[EXPLOSION_SOUNDS] = pygame.mixer.Sound(r'sounds/explosao_8bit.mp3')
 
     return assets
-
-
