@@ -2,11 +2,15 @@ import variable
 import pygame
 import funcoes
 
-# Classe das paredes
-
-
 class Fixed_wall(pygame.sprite.Sprite):
     def __init__(self, assets, spawn_point):
+        """Create an instance of Fixed walls
+
+        Keyword arguments:
+        assets -- image dictionary
+        spawn_point -- location of spawn (x, y)
+        """
+
         pygame.sprite.Sprite.__init__(self)
 
         self.image = assets['square_img']
@@ -17,22 +21,39 @@ class Fixed_wall(pygame.sprite.Sprite):
 
 class Removable_wall(pygame.sprite.Sprite):
     def __init__(self, assets, spawn_point):
+        """Create an instance of Removable walls
+
+        Keyword arguments:
+        assets -- image dictionary
+        spawn_point -- location of spawn (x, y)
+        """
+
         pygame.sprite.Sprite.__init__(self)
+
         self.image = assets['tijolo']
         self.rect = self.image.get_rect()
         self.rect.centerx = spawn_point[0] + (variable.WIDTH_SQUARE/2)
         self.rect.centery = spawn_point[1] + (variable.HEIGHT_SQUARE/2)
 
-# Classe Principal, cria todas as caracteristicas do player
-
 
 class Character(pygame.sprite.Sprite):
     def __init__(self, player_sheet, posx, posy):
+        """Create an instance of the Player
+
+        Keyword arguments:
+        player_sheet -- player's spritesheet
+        posx -- location of spawn (x)
+        posy -- location of spawn (y)
+        """
+
         pygame.sprite.Sprite.__init__(self)
 
-        # animacoes do personagem
+        # Player animations
         player_sheet = pygame.transform.scale(
-            player_sheet, (variable.WIDTH_SQUARE*4, variable.HEIGHT_SQUARE*4))
+            player_sheet, 
+            (variable.WIDTH_SQUARE*4, variable.HEIGHT_SQUARE*4)
+        )
+        
         spritesheet = funcoes.load_spritesheet(player_sheet, 4, 4)
         self.animations = {
             variable.STILL: spritesheet[4:5],
@@ -41,30 +62,34 @@ class Character(pygame.sprite.Sprite):
             variable.LEFT: spritesheet[8:12],
             variable.UP: spritesheet[12:15],
         }
+
         self.state = variable.STILL
         self.animation = self.animations[self.state]
         self.frame = 0
         self.image = self.animation[self.frame]
         self.rect = self.image.get_rect()
 
-        # posicao do personagem
+        # Player position
         self.rect.centerx = posx
         self.rect.bottom = posy
         self.speedx = 0
         self.speedy = 0
 
-        # updata as acoes
+        # Action times
         self.last_update = pygame.time.get_ticks()
         self.frame_ticks = 10
         self.last_shot = pygame.time.get_ticks()
         self.shoot_ticks = 1000
 
     def update(self):
-        # movimento
+        """Update player characteristics
+        """
+
+        # Movement
         self.rect.x += self.speedx
         self.rect.y += self.speedy
 
-        # impede que o personagem entre na parede
+        # Check if player is passing external fixed blocks
         if self.rect.right > variable.RESOLUTION[0] - variable.WIDTH_SQUARE:
             self.rect.right = variable.RESOLUTION[0] - variable.WIDTH_SQUARE
         if self.rect.left < variable.WIDTH_SQUARE:
@@ -74,7 +99,7 @@ class Character(pygame.sprite.Sprite):
         if self.rect.bottom > variable.RESOLUTION[1] - variable.HEIGHT_SQUARE:
             self.rect.bottom = variable.RESOLUTION[1] - variable.HEIGHT_SQUARE
 
-        # anima o andar do personagem
+        # Walking animation
         now = pygame.time.get_ticks()
         elapsed_ticks = now - self.last_update
 
@@ -93,6 +118,14 @@ class Character(pygame.sprite.Sprite):
             self.rect.center = center
 
     def drop_bomb(self, assets, all_sprites, all_jacas):
+        """Drop bomb method
+
+        Keyword arguments:
+        assets -- image dictionary
+        all_sprites -- All sprites group
+        all_jacas -- All jackfruits group
+        """
+        
         now = pygame.time.get_ticks()
 
         elapsed_ticks = now - self.last_shot
@@ -102,12 +135,19 @@ class Character(pygame.sprite.Sprite):
             self.last_shot = now
 
             new_jaca = Jaca(assets, self.rect.centerx, self.rect.centery)
-            # all_sprites.add(new_jaca)
             all_jacas.add(new_jaca)
 
 
 class Jaca(pygame.sprite.Sprite):
     def __init__(self, assets, px, py):
+        """Create jackfruit instance
+
+        Keyword arguments:
+        assets -- image dictionary
+        px -- Bomb position (x)
+        py -- Bomb position (y)
+        """
+
         pygame.sprite.Sprite.__init__(self)
 
         self.jaca_types = {
@@ -131,10 +171,13 @@ class Jaca(pygame.sprite.Sprite):
         self.frame_ticks_exp = 2500
 
     def update(self):
+        """Update bomb characteristics
+        """
+
         now = pygame.time.get_ticks()
         elapsed_ticks = now - self.last_update
 
-        # transfoma no sprite da jaca aberta
+        # Transform to open jackfruit
         if elapsed_ticks > self.frame_ticks:
             self.image = self.jaca_types['aberta1']
             self.mask = pygame.mask.from_surface(self.image)
@@ -147,7 +190,7 @@ class Jaca(pygame.sprite.Sprite):
             self.image = self.jaca_types['aberta3']
             self.mask = pygame.mask.from_surface(self.image)
 
-        # transforma no sprite da bomba
+        # Transform to explosion sprite
         if elapsed_ticks > self.frame_ticks*4:
 
             if elapsed_ticks > self.frame_ticks*4 + 250:
@@ -168,6 +211,6 @@ class Jaca(pygame.sprite.Sprite):
             self.rect.centerx = self.x
             self.rect.centery = self.y
 
-        # elimina o sprite
+        # Kill Sprite after ticks
         if elapsed_ticks > self.frame_ticks_exp:
             self.kill()
