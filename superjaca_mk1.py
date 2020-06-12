@@ -16,8 +16,8 @@ char_pos = [[RESOLUTION[0]/DIVISIONS[0], RESOLUTION[1] - 40],
             [RESOLUTION[0] - 40, 80]]
 
 # Set initial player settings
-p1 = Character(assets["player1_img"], char_pos[0][0], char_pos[0][1])
-p2 = Character(assets["player2_img"], char_pos[1][0], char_pos[1][1])
+p1 = Character(assets["ash_img"], char_pos[0][0], char_pos[0][1])
+p2 = Character(assets["pacman_img"], char_pos[1][0], char_pos[1][1])
     
 # All sprite groups 
 all_sprites = pygame.sprite.Group()
@@ -53,19 +53,57 @@ pygame.mixer.music.play(loops=-1)
 while SCREEN == 0:
     # Start screen loop
     for event in pygame.event.get():
-        # ----- Verifica consequências
+
         if event.type == pygame.QUIT:
             pygame.quit()  
-        if event.type == pygame.KEYUP:
-            SCREEN = 1
+        if event.type == pygame.KEYDOWN:
+            SCREEN = 4
         
-    inicial = pygame.image.load('img/PeNaJaca.png').convert()
-    inicial_rect = inicial.get_rect()
-
-    window.blit(assets['pejacks'], (0,0))
+    window.blit(assets['initialScreen_img'], (0,0))
     pygame.display.update()
-            
-    
+
+lista_sprite = [assets["ash_img"], assets["pacman_img"],assets["rgb_img"],assets["ghost_img"],assets["link_img"],assets["bomberman_img"]]
+cord_lis = [
+    [RESOLUTION[0]/DIVISIONS[0] + 1, RESOLUTION[1]/3 + 17],
+    [RESOLUTION[0]/DIVISIONS[0]+127, RESOLUTION[1]/3 + 17],
+    [RESOLUTION[0]/DIVISIONS[0]+337, RESOLUTION[1]/3 + 17],
+    [RESOLUTION[0]/DIVISIONS[0]+463,RESOLUTION[1]/3 + 17]
+]
+
+while SCREEN == 4:
+    # Start screen loop
+    for event in pygame.event.get():
+
+        if event.type == pygame.QUIT:
+            pygame.quit()
+        if event.type == pygame.KEYDOWN:
+            SCREEN = 1
+
+    window.blit(assets['choosescreen_img'], (0,0))
+
+    for j, i in enumerate(lista_sprite):
+        img = load_spritesheet(i, 4, 4)[4]
+        img =  pygame.transform.scale(img, (HEIGHT_SQUARE + 15, WIDTH_SQUARE+ 15))
+        if j == 0:
+            window.blit(img, cord_lis[0])
+            window.blit(img, cord_lis[2])
+        elif j == 1:
+            window.blit(img, cord_lis[1])
+            window.blit(img, cord_lis[3])
+        elif j == 2:
+            window.blit(img, (cord_lis[0][0], cord_lis[0][1]+90))
+            window.blit(img, (cord_lis[2][0], cord_lis[2][1]+90))
+        elif j == 3:
+            window.blit(img, (cord_lis[1][0], cord_lis[1][1]+90))
+            window.blit(img, (cord_lis[3][0], cord_lis[3][1]+90))
+        elif j == 4:
+            window.blit(img, (cord_lis[0][0], cord_lis[0][1]+180))
+            window.blit(img, (cord_lis[2][0], cord_lis[2][1]+180))
+        elif j == 5:
+            window.blit(img, (cord_lis[1][0], cord_lis[1][1]+180))
+            window.blit(img, (cord_lis[3][0], cord_lis[3][1]+180))
+        
+    pygame.display.update()
 
 while SCREEN == 1:
     # Main game screen loop

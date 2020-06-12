@@ -2,11 +2,13 @@ import pygame
 from variable import *
 from funcoes import *
 
-PLAYER1_IMG = 'player1_img'
-PLAYER2_IMG = 'player2_img'
-PLAYER3_IMG = 'player3_img'
-PLAYER4_IMG = 'player4_img'
+RGB_IMG = 'rgb_img'
+LINK_IMG = 'link_img'
+GHOST_IMG = 'ghost_img'
+BOMBERMAN_IMG = 'bomberman_img'
 SQUARE_IMG = 'square_img'
+PACMAN_IMG = "pacman_img"
+ASH_IMG = "ash_img"
 JACA_FECHADA_IMG = "jaca_fechada_img"
 JACA_ABERTA1_IMG = "jaca_aberta1_img"
 JACA_ABERTA2_IMG = "jaca_aberta2_img"
@@ -18,7 +20,8 @@ EXPLOJACA4_IMG = "explojaca4_img"
 EXPLOSION_SOUNDS = "explosion_sound"
 EXPLOSAO = 'explojaca'
 TIJOLO = "tijolo"
-TELAINI = 'pejacks'
+TELAINI = 'initialScreen_img'
+TELACHOO = "choosescreen_img"
 TELAFIM1 = 'pe_na_jaca1'
 TELAFIM2 = 'pe_na_jaca2'
 
@@ -36,13 +39,17 @@ def load_assets():
     explojaca = load_spritesheet(explo_load, 2, 2)
 
     assets = {}
-    assets[PLAYER1_IMG] = pygame.image.load('img/teste.png').convert_alpha()
+    assets[RGB_IMG] = pygame.image.load('img/teste.png').convert_alpha()
 
-    assets[PLAYER2_IMG] = pygame.image.load('img/zelda_sprites.png').convert_alpha()
+    assets[LINK_IMG] = pygame.image.load('img/zelda_sprites.png').convert_alpha()
 
-    assets[PLAYER3_IMG] = pygame.image.load('img/ghost_sprites.png').convert_alpha()
+    assets[GHOST_IMG] = pygame.image.load('img/ghost_sprites.png').convert_alpha()
 
-    assets[PLAYER4_IMG] = pygame.image.load('img/bomberman_sprites.png').convert_alpha()
+    assets[BOMBERMAN_IMG] = pygame.image.load('img/bomberman_sprites.png').convert_alpha()
+
+    assets[PACMAN_IMG] = pygame.image.load('img/pacman_sprites.png').convert_alpha()
+
+    assets[ASH_IMG] = pygame.image.load('img/ash_sprites.png').convert_alpha()
 
     assets[SQUARE_IMG] = pygame.image.load('img/bloco.png').convert_alpha()
     assets[SQUARE_IMG] = pygame.transform.scale(assets['square_img'], SQUARE_DIMENSIONS)
@@ -61,7 +68,10 @@ def load_assets():
     assets[EXPLOJACA4_IMG] = explojaca[3]
 
     assets[TELAINI] = pygame.image.load('img/PeNaJaca.png').convert_alpha()
-    assets[TELAINI] = pygame.transform.scale(assets['pejacks'], RESOLUTION)
+    assets[TELAINI] = pygame.transform.scale(assets['initialScreen_img'], RESOLUTION)
+
+    assets[TELACHOO] = pygame.image.load('img/chooseScreen.png').convert_alpha()
+    assets[TELACHOO] = pygame.transform.scale(assets['choosescreen_img'], RESOLUTION)
 
     assets[TELAFIM1] = pygame.image.load('img/PeNaJacafinalP1.png').convert_alpha()
     assets[TELAFIM1] = pygame.transform.scale(assets['pe_na_jaca1'], RESOLUTION)

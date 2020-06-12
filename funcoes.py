@@ -156,3 +156,14 @@ def build_walls(assets, all_sprites, fixed_wall_sprites, all_walls, removable_wa
         all_walls.add(wall)
 
     return all_sprites, fixed_wall_sprites, all_walls, removable_wall_sprites
+
+def displayTextMainMenu(text, COLOR, screen, position):
+        # Renders the text by the font chosen before
+        font_50 = pygame.font.SysFont("American Captain", 50)
+        text = font_50.render(text, True, COLOR)
+
+        # Sets the text position:
+        textPosition = (position)
+
+        # Sticks the text to the screen:
+        screen.blit(text, textPosition)
