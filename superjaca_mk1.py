@@ -50,6 +50,7 @@ pygame.mixer.music.play(loops=-1)
 
 # Start game loop 
 while SCREEN == 0:
+    clock.tick(FPS)
     # Start screen loop
     for event in pygame.event.get():
 

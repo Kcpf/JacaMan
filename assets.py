@@ -67,10 +67,10 @@ def load_assets():
     assets[EXPLOJACA3_IMG] = explojaca[2]
     assets[EXPLOJACA4_IMG] = explojaca[3]
 
-    assets[TELAINI] = pygame.image.load('img/PeNaJaca.png').convert_alpha()
+    assets[TELAINI] = pygame.image.load('img/InitialScreen.png').convert_alpha()
     assets[TELAINI] = pygame.transform.scale(assets['initialScreen_img'], RESOLUTION)
 
-    assets[TELACHOO] = pygame.image.load('img/chooseScreen.jpeg').convert_alpha()
+    assets[TELACHOO] = pygame.image.load('img/chooseScreen.png').convert_alpha()
     assets[TELACHOO] = pygame.transform.scale(assets['choosescreen_img'], RESOLUTION)
 
     assets[TELAFIM1] = pygame.image.load('img/PeNaJacafinalP1.png').convert_alpha()
