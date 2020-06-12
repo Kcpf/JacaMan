@@ -62,7 +62,15 @@ while SCREEN == 0:
     window.blit(assets['initialScreen_img'], (0,0))
     pygame.display.update()
 
-lista_sprite = [assets["ash_img"], assets["pacman_img"],assets["rgb_img"],assets["ghost_img"],assets["link_img"],assets["bomberman_img"]]
+lista_sprite = [
+    assets["ash_img"], 
+    assets["pacman_img"],
+    assets["rgb_img"],
+    assets["ghost_img"],
+    assets["link_img"],
+    assets["bomberman_img"]
+]
+
 cord_lis = [
     [RESOLUTION[0]/DIVISIONS[0] + 1, RESOLUTION[1]/3 + 17],
     [RESOLUTION[0]/DIVISIONS[0]+127, RESOLUTION[1]/3 + 17],
@@ -70,14 +78,15 @@ cord_lis = [
     [RESOLUTION[0]/DIVISIONS[0]+463,RESOLUTION[1]/3 + 17]
 ]
 
+pos_circle =  [int(RESOLUTION[0]/DIVISIONS[0]+1),int(RESOLUTION[1]/3 + 17)]
+selection1 = ""
+
 while SCREEN == 4:
     # Start screen loop
     for event in pygame.event.get():
 
         if event.type == pygame.QUIT:
             pygame.quit()
-        if event.type == pygame.KEYDOWN:
-            SCREEN = 1
 
     window.blit(assets['choosescreen_img'], (0,0))
 
@@ -102,8 +111,14 @@ while SCREEN == 4:
         elif j == 5:
             window.blit(img, (cord_lis[1][0], cord_lis[1][1]+180))
             window.blit(img, (cord_lis[3][0], cord_lis[3][1]+180))
+    
+    if buttonClick(cord_lis[0][0], cord_lis[0][1], HEIGHT_SQUARE + 15, WIDTH_SQUARE+ 15):
+        pygame.draw.circle(window, (0, 0, 0), pos_circle, 10)
+    
         
     pygame.display.update()
+
+
 
 while SCREEN == 1:
     # Main game screen loop

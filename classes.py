@@ -199,6 +199,8 @@ class Jaca(pygame.sprite.Sprite):
 
             if elapsed_ticks > self.frame_ticks*4 + 500:
                 self.image = self.assets['explojaca2_img']
+            
+            # self.assets[EXPLOSION_SOUNDS].play()
 
             if elapsed_ticks > self.frame_ticks*4 + 750:
                 self.image = self.assets['explojaca3_img']
