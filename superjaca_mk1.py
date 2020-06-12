@@ -15,10 +15,15 @@ assets = assets.load_assets()
 char_pos = [[RESOLUTION[0]/DIVISIONS[0], RESOLUTION[1] - 40],
             [RESOLUTION[0] - 40, 80]]
 
-# Set initial player settings
-p1 = Character(assets["ash_img"], char_pos[0][0], char_pos[0][1])
-p2 = Character(assets["pacman_img"], char_pos[1][0], char_pos[1][1])
-    
+lista_sprite = [
+    assets["ash_img"], 
+    assets["pacman_img"],
+    assets["rgb_img"],
+    assets["ghost_img"],
+    assets["link_img"],
+    assets["bomberman_img"]
+]
+
 # All sprite groups 
 all_sprites = pygame.sprite.Group()
 all_jacas = pygame.sprite.Group()
@@ -27,12 +32,6 @@ all_explosions = pygame.sprite.Group()
 all_players = pygame.sprite.Group()
 removable_wall_sprites = pygame.sprite.Group()
 all_walls = pygame.sprite.Group()
-
-all_sprites.add(p1)
-all_sprites.add(p2)
-
-all_players.add(p1)
-all_players.add(p2)
 
 
 # Create fixed walls and the removable brick
@@ -62,34 +61,9 @@ while SCREEN == 0:
     window.blit(assets['initialScreen_img'], (0,0))
     pygame.display.update()
 
-lista_sprite = [
-    assets["ash_img"], 
-    assets["pacman_img"],
-    assets["rgb_img"],
-    assets["ghost_img"],
-    assets["link_img"],
-    assets["bomberman_img"]
-]
 
-cord_lis = [
-    [RESOLUTION[0]/DIVISIONS[0] + 1, RESOLUTION[1]/3 + 17],
-    [RESOLUTION[0]/DIVISIONS[0]+127, RESOLUTION[1]/3 + 17],
-    [RESOLUTION[0]/DIVISIONS[0]+337, RESOLUTION[1]/3 + 17],
-    [RESOLUTION[0]/DIVISIONS[0]+463,RESOLUTION[1]/3 + 17]
-]
-
-pos_circle =  [int(RESOLUTION[0]/DIVISIONS[0]+1),int(RESOLUTION[1]/3 + 17)]
-selection1 = ""
-
+window.blit(assets['choosescreen_img'], (0,0))
 while SCREEN == 4:
-    # Start screen loop
-    for event in pygame.event.get():
-
-        if event.type == pygame.QUIT:
-            pygame.quit()
-
-    window.blit(assets['choosescreen_img'], (0,0))
-
     for j, i in enumerate(lista_sprite):
         img = load_spritesheet(i, 4, 4)[4]
         img =  pygame.transform.scale(img, (HEIGHT_SQUARE + 15, WIDTH_SQUARE+ 15))
@@ -112,13 +86,85 @@ while SCREEN == 4:
             window.blit(img, (cord_lis[1][0], cord_lis[1][1]+180))
             window.blit(img, (cord_lis[3][0], cord_lis[3][1]+180))
     
-    if buttonClick(cord_lis[0][0], cord_lis[0][1], HEIGHT_SQUARE + 15, WIDTH_SQUARE+ 15):
-        pygame.draw.circle(window, (0, 0, 0), pos_circle, 10)
-    
-        
+    for event in pygame.event.get():
+
+        if event.type == pygame.QUIT:
+            pygame.quit()
+
+        if event.type == pygame.MOUSEBUTTONDOWN:
+                                
+            if buttonClick(cord_lis[0][0], cord_lis[0][1], HEIGHT_SQUARE + 15, WIDTH_SQUARE+ 15):
+                window.blit(assets['choosescreen_img'], (0,0))
+                pygame.draw.circle(window, (255,255,255), pos_circle, 10)
+                p1 = Character(assets["ash_img"], char_pos[0][0], char_pos[0][1])
+                
+            elif buttonClick(cord_lis[1][0], cord_lis[1][1], HEIGHT_SQUARE + 15, WIDTH_SQUARE+ 15):
+                window.blit(assets['choosescreen_img'], (0,0))
+                pygame.draw.circle(window, (255,255,255), (int(cord_lis[1][0]), int(cord_lis[1][1])), 10)
+                p1 = Character(assets["pacman_img"], char_pos[0][0], char_pos[0][1])
+            
+            elif buttonClick(cord_lis[0][0], cord_lis[0][1]+90, HEIGHT_SQUARE + 15, WIDTH_SQUARE+ 15):
+                window.blit(assets['choosescreen_img'], (0,0))
+                pygame.draw.circle(window, (255,255,255), (int(cord_lis[0][0]), int(cord_lis[0][1]+90)), 10)
+                p1 = Character(assets["rgb_img"], char_pos[0][0], char_pos[0][1])
+            
+            elif buttonClick(cord_lis[1][0], cord_lis[1][1]+90, HEIGHT_SQUARE + 15, WIDTH_SQUARE+ 15):
+                window.blit(assets['choosescreen_img'], (0,0))
+                pygame.draw.circle(window, (255,255,255), (int(cord_lis[1][0]), int(cord_lis[1][1]+90)), 10)
+                p1 = Character(assets["ghost_img"], char_pos[0][0], char_pos[0][1])
+            
+            elif buttonClick(cord_lis[0][0], cord_lis[0][1]+180, HEIGHT_SQUARE + 15, WIDTH_SQUARE+ 15):
+                window.blit(assets['choosescreen_img'], (0,0))
+                pygame.draw.circle(window, (255,255,255), (int(cord_lis[0][0]), int(cord_lis[0][1]+180)), 10)
+                p1 = Character(assets["link_img"], char_pos[0][0], char_pos[0][1])
+            
+            elif buttonClick(cord_lis[1][0], cord_lis[1][1]+180, HEIGHT_SQUARE + 15, WIDTH_SQUARE+ 15):
+                window.blit(assets['choosescreen_img'], (0,0))
+                pygame.draw.circle(window, (255,255,255), (int(cord_lis[1][0]), int(cord_lis[1][1]+180)), 10)
+                p1 = Character(assets["bomberman_img"], char_pos[0][0], char_pos[0][1])
+            
+            if buttonClick(cord_lis[2][0], cord_lis[2][1], HEIGHT_SQUARE + 15, WIDTH_SQUARE+ 15):
+                window.blit(assets['choosescreen_img'], (0,0))
+                pygame.draw.circle(window, (0,0,0), (int(cord_lis[2][0]), int(cord_lis[2][1])), 10)
+                p2 = Character(assets["ash_img"], char_pos[1][0], char_pos[1][1])
+
+            elif buttonClick(cord_lis[3][0], cord_lis[3][1], HEIGHT_SQUARE + 15, WIDTH_SQUARE+ 15):
+                window.blit(assets['choosescreen_img'], (0,0))
+                pygame.draw.circle(window, (0,0,0), (int(cord_lis[3][0]), int(cord_lis[3][1])), 10)
+                p2 = Character(assets["pacman_img"], char_pos[1][0], char_pos[1][1])
+
+            elif buttonClick(cord_lis[2][0], cord_lis[2][1]+90, HEIGHT_SQUARE + 15, WIDTH_SQUARE+ 15):
+                window.blit(assets['choosescreen_img'], (0,0))
+                pygame.draw.circle(window, (0,0,0), (int(cord_lis[2][0]), int(cord_lis[2][1]+90)), 10)
+                p2 = Character(assets["rgb_img"], char_pos[1][0], char_pos[1][1])
+
+            elif buttonClick(cord_lis[3][0], cord_lis[3][1]+90, HEIGHT_SQUARE + 15, WIDTH_SQUARE+ 15):
+                window.blit(assets['choosescreen_img'], (0,0))
+                pygame.draw.circle(window, (0,0,0), (int(cord_lis[3][0]), int(cord_lis[3][1]+90)), 10)
+                p2 = Character(assets["ghost_img"], char_pos[1][0], char_pos[1][1])
+            
+            elif buttonClick(cord_lis[2][0], cord_lis[2][1]+180, HEIGHT_SQUARE + 15, WIDTH_SQUARE+ 15):
+                window.blit(assets['choosescreen_img'], (0,0))
+                pygame.draw.circle(window, (0,0,0), (int(cord_lis[2][0]), int(cord_lis[2][1]+180)), 10)
+                p2 = Character(assets["link_img"], char_pos[1][0], char_pos[1][1])
+
+            elif buttonClick(cord_lis[3][0], cord_lis[3][1]+180, HEIGHT_SQUARE + 15, WIDTH_SQUARE+ 15):
+                window.blit(assets['choosescreen_img'], (0,0))
+                pygame.draw.circle(window, (0,0,0), (int(cord_lis[3][0]), int(cord_lis[3][1]+180)), 10)
+                p2 = Character(assets["bomberman_img"], char_pos[1][0], char_pos[1][1])
+                
+            
+            if buttonClick(175, 500, 250, 100):
+                SCREEN = 1    
+            
     pygame.display.update()
 
 
+       
+all_sprites.add(p1)
+all_players.add(p1)
+all_sprites.add(p2)
+all_players.add(p2)
 
 while SCREEN == 1:
     # Main game screen loop
@@ -136,7 +182,7 @@ while SCREEN == 1:
             if event.key == pygame.K_LEFT:
                 p1.state = LEFT
                 p1.speedx -= WIDTH_SQUARE
-                
+
             if event.key == pygame.K_RIGHT:
                 p1.state = RIGHT
                 p1.speedx += WIDTH_SQUARE
@@ -164,11 +210,11 @@ while SCREEN == 1:
             if event.key == pygame.K_w:
                 p2.state = UP
                 p2.speedy -= WIDTH_SQUARE
-                
+               
             if event.key == pygame.K_s:
                 p2.state = DOWN
                 p2.speedy += WIDTH_SQUARE
-                    
+               
 
         if event.type == pygame.KEYUP:
 
@@ -184,11 +230,11 @@ while SCREEN == 1:
             if event.key == pygame.K_UP:
                 p1.state = STILL
                 p1.speedy += WIDTH_SQUARE
-
+                
             if event.key == pygame.K_DOWN:
                 p1.state = STILL
                 p1.speedy -= WIDTH_SQUARE
-
+                
             # Event player 2
             if event.key == pygame.K_a:
                 p2.state = STILL
@@ -201,7 +247,7 @@ while SCREEN == 1:
             if event.key == pygame.K_w:
                 p2.state = STILL
                 p2.speedy += WIDTH_SQUARE
-                    
+                
             if event.key == pygame.K_s:
                 p2.state = STILL
                 p2.speedy -= WIDTH_SQUARE

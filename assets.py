@@ -70,7 +70,7 @@ def load_assets():
     assets[TELAINI] = pygame.image.load('img/PeNaJaca.png').convert_alpha()
     assets[TELAINI] = pygame.transform.scale(assets['initialScreen_img'], RESOLUTION)
 
-    assets[TELACHOO] = pygame.image.load('img/chooseScreen.png').convert_alpha()
+    assets[TELACHOO] = pygame.image.load('img/chooseScreen.jpeg').convert_alpha()
     assets[TELACHOO] = pygame.transform.scale(assets['choosescreen_img'], RESOLUTION)
 
     assets[TELAFIM1] = pygame.image.load('img/PeNaJacafinalP1.png').convert_alpha()
@@ -82,6 +82,6 @@ def load_assets():
     # Load Game sounds
     pygame.mixer.music.load('sounds/Mr._Blue_8bit.mp3')
     pygame.mixer.music.set_volume(1)
-    # assets[EXPLOSION_SOUNDS] = pygame.mixer.Sound('sounds/explosao_8bit.mp3')
+    assets[EXPLOSION_SOUNDS] = pygame.mixer.Sound('sounds/exp.ogg')
 
     return assets

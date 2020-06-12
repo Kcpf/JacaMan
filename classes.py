@@ -179,6 +179,7 @@ class Jaca(pygame.sprite.Sprite):
 
         # Transform to open jackfruit
         if elapsed_ticks > self.frame_ticks:
+            self.assets['explosion_sound'].play()
             self.image = self.jaca_types['aberta1']
             self.mask = pygame.mask.from_surface(self.image)
 
@@ -192,10 +193,10 @@ class Jaca(pygame.sprite.Sprite):
 
         # Transform to explosion sprite
         if elapsed_ticks > self.frame_ticks*4:
-
+            
             if elapsed_ticks > self.frame_ticks*4 + 250:
                 self.image = self.assets['explojaca1_img']
-                # self.assets[EXPLOSION_SOUNDS].play()
+                
 
             if elapsed_ticks > self.frame_ticks*4 + 500:
                 self.image = self.assets['explojaca2_img']

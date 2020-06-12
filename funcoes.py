@@ -173,6 +173,7 @@ def buttonClick(x, y, width, height):
     mousePosition = pygame.mouse.get_pos()
 
     # Checks if mouse is within button area:
+
     if mousePosition[0] >= x and mousePosition[0] <= x + width:
         if mousePosition[1] >= y and mousePosition[1] <= y + height:
 
