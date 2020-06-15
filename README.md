@@ -1,6 +1,13 @@
 SuperJacaMan
 ===============
 
+Game inspired in the legendary Bomberman (but better!)
+
+Assignment for Design de Software - [Insper](https://www.insper.edu.br/) (First Semester of Engineering)
+
+By: [Fernando França](https://github.com/Kcpf), [Francisco Costa](https://github.com/franbvc) and [Vinícius Eller](https://github.com/Vigrel)
+
+
 SuperJacaMan was made using [Pygame][pygame]
 
 How-to-play
@@ -24,15 +31,23 @@ or download as zip and extract.
 
 ```bash
 $ cd SuperJacaMan
-$ python superjaca.py
+$ python superjaca_mk1.py
 ```
 
 5. You are ready to play!
 
+6. Player 1 - Walking with arrows and drop bomb with letter L
+
+7. Player 2 - Walking with WASD and drop bomb with letter E
+
 ScreenShot
 ----------
 
-![Flappy Bird](\img\game_img.png)
+![SuperJaca](\img\screenshot.png)
 
 [pygame]: http://www.pygame.org
 [pipenv]: https://pipenv.readthedocs.io/en/latest/
+
+Gameplay
+--------
+[![Watch the video](https://img.youtube.com/vi/PEQNcIBAvU4/hqdefault.jpg)](https://youtu.be/PEQNcIBAvU4)
