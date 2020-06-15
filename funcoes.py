@@ -157,24 +157,20 @@ def build_walls(assets, all_sprites, fixed_wall_sprites, all_walls, removable_wa
 
     return all_sprites, fixed_wall_sprites, all_walls, removable_wall_sprites
 
-def displayTextMainMenu(text, COLOR, screen, position):
-        # Renders the text by the font chosen before
-        font_50 = pygame.font.SysFont("American Captain", 50)
-        text = font_50.render(text, True, COLOR)
+def checkArea(x, y, width, height):
+    """Create an area and check if the pointer is hovering over it 
 
-        # Sets the text position:
-        textPosition = (position)
-
-        # Sticks the text to the screen:
-        screen.blit(text, textPosition)
-
-def buttonClick(x, y, width, height):
+    Keyword arguments:
+    x -- point in x label
+    y -- point in y label
+    width -- set the width
+    height -- set the height
+    """
     # Gets mouse position:
-    mousePosition = pygame.mouse.get_pos()
+    position = pygame.mouse.get_pos()
 
     # Checks if mouse is within button area:
-
-    if mousePosition[0] >= x and mousePosition[0] <= x + width:
-        if mousePosition[1] >= y and mousePosition[1] <= y + height:
+    if position[0] >= x and position[0] <= x + width:
+        if position[1] >= y and position[1] <= y + height:
 
             return True

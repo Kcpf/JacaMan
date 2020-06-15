@@ -1,6 +1,7 @@
 import pygame
 from variable import *
 from funcoes import *
+import random
 
 RGB_IMG = 'rgb_img'
 LINK_IMG = 'link_img'
@@ -18,13 +19,15 @@ EXPLOJACA2_IMG = "explojaca2_img"
 EXPLOJACA3_IMG = "explojaca3_img"
 EXPLOJACA4_IMG = "explojaca4_img"
 EXPLOSION_SOUNDS = "explosion_sound"
+MENU_SOUNDS = "menu_navigator"
 EXPLOSAO = 'explojaca'
 TIJOLO = "tijolo"
 TELAINI = 'initialScreen_img'
 TELACHOO = "choosescreen_img"
 TELAFIM1 = 'pe_na_jaca1'
 TELAFIM2 = 'pe_na_jaca2'
-
+START_SOUND = "start"
+DEATH_SOUND = 'death'
 
 def load_assets():
     jaca_load = pygame.image.load("img/jaca_sprite2.0.png")
@@ -80,8 +83,23 @@ def load_assets():
     assets[TELAFIM2] = pygame.transform.scale(assets['pe_na_jaca2'], RESOLUTION)
 
     # Load Game sounds
-    pygame.mixer.music.load('sounds/Mr._Blue_8bit.mp3')
+    a = random.randint(0,100)
+    if a >= 0 and a <= 24:
+        pygame.mixer.music.load('sounds/Mr._Blue_8bit.mp3')
+    elif a > 24 and a <= 48:
+        pygame.mixer.music.load("sounds/Don't stop 8bit.mp3")
+    elif a > 48 and a <= 72:
+        pygame.mixer.music.load("sounds/The Trooper.ogg")
+    elif a > 72 and a < 98:
+        pygame.mixer.music.load("sounds/Jurassic_Park_-_8_Bit_Cinema.mp3")
+    elif a == 98:
+        pygame.mixer.music.load("sounds/Soviet_Union_National_Anthem_8-bit_Remix_25Osc.mp3")
+    else:
+        pygame.mixer.music.load("sounds/lav_town.ogg")
     pygame.mixer.music.set_volume(1)
-    assets[EXPLOSION_SOUNDS] = pygame.mixer.Sound('sounds/exp.ogg')
+    assets[EXPLOSION_SOUNDS] = pygame.mixer.Sound('sounds/Bomb.ogg')
+    assets[MENU_SOUNDS] = pygame.mixer.Sound('sounds/menu_navigator.ogg')
+    assets[START_SOUND] = pygame.mixer.Sound('sounds/startGame_sound.ogg')
+    assets[DEATH_SOUND] = pygame.mixer.Sound('sounds/Death_sound.wav')
 
     return assets
