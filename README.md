@@ -43,7 +43,7 @@ $ python superjaca_mk1.py
 ScreenShot
 ----------
 
-![SuperJaca](\img\screenshot.png)
+![SuperJaca](../master/img/screenshot.png)
 
 [pygame]: http://www.pygame.org
 [pipenv]: https://pipenv.readthedocs.io/en/latest/
