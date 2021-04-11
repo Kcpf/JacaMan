@@ -139,6 +139,23 @@ def build_walls(assets, all_sprites, fixed_wall_sprites, all_walls, removable_wa
     """
 
     # Create fixed walls
+    all_sprites, fixed_wall_sprites, all_walls = build_fixed_walls(assets, all_sprites, fixed_wall_sprites, all_walls)
+
+    # Create removable walls
+    all_sprites, removable_wall_sprites, all_walls = build_removable_walls(assets, all_sprites, removable_wall_sprites, all_walls)
+
+    return all_sprites, fixed_wall_sprites, all_walls, removable_wall_sprites
+
+def build_fixed_walls(assets, all_sprites, fixed_wall_sprites, all_walls):
+    """Create fixed walls inside sprite groups
+
+    Keyword arguments:
+    assets -- image dictionary
+    all_sprites -- All Sprites group
+    fixed_wall_sprites -- Fixed wall Sprites group
+    all_walls -- Wall Sprites group
+    """
+
     pos = block_location(variable.MAP, variable.DIVISIONS, variable.RESOLUTION)
     for each in pos:
         wall = Fixed_wall(assets, each)
@@ -146,16 +163,25 @@ def build_walls(assets, all_sprites, fixed_wall_sprites, all_walls, removable_wa
         fixed_wall_sprites.add(wall)
         all_walls.add(wall)
 
-    # Create removable walls
-    pos_tijolo = tijolo_location(
-        variable.MAP, variable.DIVISIONS, variable.RESOLUTION)
+    return all_sprites, fixed_wall_sprites, all_walls
+
+def build_removable_walls(assets, all_sprites, removable_wall_sprites, all_walls):
+    """Create removable walls inside sprite groups
+
+    Keyword arguments:
+    assets -- image dictionary
+    all_sprites -- All Sprites group
+    removable_wall_sprites -- Removable wall Sprites group
+    all_walls -- Wall Sprites group
+    """
+    pos_tijolo = tijolo_location(variable.MAP, variable.DIVISIONS, variable.RESOLUTION)
     for each in pos_tijolo:
         wall = Removable_wall(assets, each)
         all_sprites.add(wall)
         removable_wall_sprites.add(wall)
         all_walls.add(wall)
 
-    return all_sprites, fixed_wall_sprites, all_walls, removable_wall_sprites
+    return all_sprites, removable_wall_sprites, all_walls
 
 def checkArea(x, y, width, height):
     """Create an area and check if the pointer is hovering over it 
